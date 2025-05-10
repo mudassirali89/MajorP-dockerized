@@ -3,6 +3,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 import datetime
 import openpyxl
+import os
+from django.conf import settings
 
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -19,6 +21,7 @@ from sklearn.ensemble import RandomForestClassifier
 # Create your views here.
 # from ..Remote_User.models import ClientRegister_Model, student_marks_model, student_risk_prediction_model, detection_ratio_model
 from Remote_User.models import ClientRegister_Model,student_marks_model,student_risk_prediction_model,detection_ratio_model
+from .models import StudentMarksModel
 
 def login(request):
 
@@ -108,8 +111,11 @@ def Predict_Earliest_Possible_Prediction_DataSets(request):
         if request.method == "POST":
             kword = request.POST.get('keyword')
             print(kword)
-
-            df = pd.read_csv('Student_DataSets.csv', encoding='latin-1')
+            file_path = os.path.join(settings.BASE_DIR, 'Student_DataSets.csv')
+            # file_path = os.path.join(BASE_DIR, 'Student_DataSets.csv')
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"File not found: {file_path}")
+            df = pd.read_csv(file_path, encoding='latin-1')
             df
             df.columns
             df.rename(columns={'names': 'sname', 'sem3': 's3per'}, inplace=True)
@@ -249,3 +255,14 @@ def ratings(request,pk):
         return redirect('Add_DataSet_Details')
 
     return render(request,'RUser/ratings.html',{'objs':vott1})
+
+def upload_excel(request):
+    if request.method == 'POST':
+        # Process the uploaded Excel file
+        # Example: Save data to StudentMarksModel
+        for row in excel_data:
+            StudentMarksModel.objects.create(
+                student_name=row['name'],
+                marks=row['marks'],
+                risk_status=row['risk_status']
+            )

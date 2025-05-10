@@ -21,6 +21,15 @@ class student_marks_model(models.Model):
     sem2=models.CharField(max_length=300)
     sem3=models.CharField(max_length=300)
 
+class StudentMarksModel(models.Model):
+    # Define the fields for the model
+    student_name = models.CharField(max_length=255)
+    marks = models.IntegerField()
+    risk_status = models.CharField(max_length=50)
+    # Add other fields as necessary
+
+    def __str__(self):
+        return self.student_name
 
 class student_risk_prediction_model(models.Model):
 
