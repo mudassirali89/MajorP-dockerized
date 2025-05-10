@@ -1,0 +1,9 @@
+# install required packages from requirements.txt
+# install xampp
+# start Apache and SQL server
+# open folder predicting_at_risk_students in command prompt.
+# go to directory containing file manage.py
+# enter command: py manage.py runserver
+# project will be running on local server on port 8000
+# "http://127.0.0.1:8000/"
+
