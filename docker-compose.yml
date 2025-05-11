@@ -19,7 +19,7 @@ services:
       retries: 5
 
   web:
-    build: .
+    image: mudassirali89/studentinsight
     container_name: django_container
     restart: always
     command: python predicting_at_risk_students/manage.py runserver 0.0.0.0:8000
