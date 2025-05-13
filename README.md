@@ -1,1 +1,1 @@
-# MajorP-dockerized
+# dockerized version of studentinsight
